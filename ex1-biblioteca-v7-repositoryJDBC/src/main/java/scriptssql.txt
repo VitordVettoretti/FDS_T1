@@ -1,10 +1,11 @@
+--Criação da tabela Usuarios
 CREATE TABLE usuarios (
     codigo INT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     ano_nascimento INT NOT NULL
 );
 
-
+--Criação da tabela Livros
 CREATE TABLE livros (
     codigo INT PRIMARY KEY,
     titulo VARCHAR(255) NOT NULL,
@@ -14,3 +15,17 @@ CREATE TABLE livros (
     usuario_emprestado INT,
     CONSTRAINT fk_usuario_emprestado FOREIGN KEY (usuario_emprestado) REFERENCES usuarios(codigo) ON DELETE SET NULL
 );
+
+--Inserção dos Usuarios
+INSERT INTO usuarios (codigo, nome, ano_nascimento) VALUES
+(1, 'Caetano Marasca', 2003),
+(2, 'Samuel Fries', 2002),
+(3, 'Vitor Vettoretti', 2004);
+
+--Inserção dos Livros
+INSERT INTO livros (codigo, titulo, autor, ano, emprestado, usuario_emprestado) VALUES
+(1, 'Watchmen', 'Alan Moore', 1986, FALSE, NULL),
+(2, 'Batman: O Cavaleiro das Trevas', 'Frank Miller', 1986, FALSE, NULL),
+(3, 'Maus', 'Art Spiegelman', 1991, FALSE, NULL),
+(4, 'Sandman: Prelúdios e Noturnos', 'Neil Gaiman', 1989, FALSE, NULL),
+(5, 'V de Vingança', 'Alan Moore', 1988, FALSE, NULL);
