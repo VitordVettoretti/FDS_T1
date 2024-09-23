@@ -12,4 +12,6 @@ public interface AcervoRepository {
     boolean removeLivro(int codigo);
     boolean emprestarLivro(int codigoLivro, Usuario usuario);
     boolean devolverLivro(int codigoLivro);
+    List<Livro> getLivrosDisponiveis();
+    List<Livro> getLivrosEmprestadosAoUsuario(int usuarioCodigo);
 }

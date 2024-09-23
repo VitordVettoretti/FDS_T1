@@ -87,4 +87,29 @@ public class AcervoImplJdbc implements AcervoRepository {
         );
         return true;
     }
+
+    @Override
+    public List<Livro> getLivrosDisponiveis() {
+        return this.jdbcTemplate.query("SELECT codigo, titulo, autor, ano FROM livros WHERE emprestado = FALSE",
+            (resultSet, rowNum) -> new Livro(
+                resultSet.getInt("codigo"),
+                resultSet.getString("titulo"),
+                resultSet.getString("autor"),
+                resultSet.getInt("ano")
+            )
+        );
+    }
+
+    @Override
+    public List<Livro> getLivrosEmprestadosAoUsuario(int usuarioCodigo) {
+        String sql = "SELECT codigo, titulo, autor, ano FROM livros WHERE usuario_emprestado = ?";
+        return this.jdbcTemplate.query(sql, new Object[]{usuarioCodigo},
+            (resultSet, rowNum) -> new Livro(
+                resultSet.getInt("codigo"),
+                resultSet.getString("titulo"),
+                resultSet.getString("autor"),
+                resultSet.getInt("ano")
+            )
+        );
+    }
 }

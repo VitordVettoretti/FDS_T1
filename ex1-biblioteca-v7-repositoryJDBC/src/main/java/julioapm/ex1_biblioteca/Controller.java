@@ -61,18 +61,31 @@ public class Controller {
         return acervo.cadastraLivroNovo(livro);
     }
 
-    @PostMapping("/emprestar/{codigoLivro}")
+    @PostMapping("/emprestarlivro/{codigoLivro}")
     public ResponseEntity<String> emprestarLivro(@PathVariable int codigoLivro, @RequestBody Usuario usuario) {
         boolean sucesso = acervo.emprestarLivro(codigoLivro, usuario);
-        return sucesso ? ResponseEntity.ok("Livro emprestado com sucesso!") :
-                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não foi possível emprestar o livro.");
+        if (sucesso) {
+            return ResponseEntity.status(HttpStatus.OK).body("Livro emprestado com sucesso!");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Falha ao emprestar o livro.");
     }
 
-    @PostMapping("/devolver/{codigoLivro}")
+    @PostMapping("/devolverlivro/{codigoLivro}")
     public ResponseEntity<String> devolverLivro(@PathVariable int codigoLivro) {
         boolean sucesso = acervo.devolverLivro(codigoLivro);
-        return sucesso ? ResponseEntity.ok("Livro devolvido com sucesso!") :
-                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não foi possível devolver o livro.");
+        if (sucesso) {
+            return ResponseEntity.status(HttpStatus.OK).body("Livro devolvido com sucesso!");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Falha ao devolver o livro.");
+    }
+
+    @GetMapping("/livrosdisponiveis")
+    public List<Livro> getLivrosDisponiveis() {
+        return acervo.getLivrosDisponiveis();
     }
     
+    @GetMapping("/livrosemprestados/{usuarioCodigo}")
+    public List<Livro> getLivrosEmprestadosAoUsuario(@PathVariable int usuarioCodigo) {
+        return acervo.getLivrosEmprestadosAoUsuario(usuarioCodigo);
+    }
 }
