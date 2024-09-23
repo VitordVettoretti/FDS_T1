@@ -24,19 +24,37 @@ public class AcervoImplJdbc implements AcervoRepository {
     }
 
     public List<Livro> getLivrosDoAutor(String autor) {
-        return null;
+        String sql = "SELECT codigo, titulo, autor, ano FROM livros WHERE autor = ?";
+        return this.jdbcTemplate.query(sql, new Object[]{autor},
+        (resultSet, rowNum) -> new Livro(
+            resultSet.getInt("codigo"),
+            resultSet.getString("titulo"),
+            resultSet.getString("autor"),
+            resultSet.getInt("ano")
+        ));
     }
 
     public List<String> getAutores() {
-        return null;
+        String sql = "SELECT DISTINCT autor FROM livros";
+        return this.jdbcTemplate.query(sql, 
+        (resultSet, rowNum) -> resultSet.getString("autor"));
     }
 
     public List<String> getTitulos() {
-        return null;
+        String sql = "SELECT DISTINCT titulo FROM livros";
+        return this.jdbcTemplate.query(sql, 
+        (resultSet, rowNum) -> resultSet.getString("titulo"));
     }
 
     public List<Livro> getLivrosTitulo(String titulo) {
-        return null;
+        String sql = "SELECT codigo, titulo, autor, ano FROM livros WHERE titulo = ?";
+        return this.jdbcTemplate.query(sql, new Object[]{titulo},
+        (resultSet, rowNum) -> new Livro(
+            resultSet.getInt("codigo"),
+            resultSet.getString("titulo"),
+            resultSet.getString("autor"),
+            resultSet.getInt("ano")
+        ));
     }
 
     public boolean cadastraLivroNovo(Livro livro) {
