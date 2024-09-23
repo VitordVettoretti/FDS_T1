@@ -60,5 +60,19 @@ public class Controller {
     public boolean cadastraLivroNovo(@RequestBody final Livro livro) {
         return acervo.cadastraLivroNovo(livro);
     }
+
+    @PostMapping("/emprestar/{codigoLivro}")
+    public ResponseEntity<String> emprestarLivro(@PathVariable int codigoLivro, @RequestBody Usuario usuario) {
+        boolean sucesso = acervo.emprestarLivro(codigoLivro, usuario);
+        return sucesso ? ResponseEntity.ok("Livro emprestado com sucesso!") :
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não foi possível emprestar o livro.");
+    }
+
+    @PostMapping("/devolver/{codigoLivro}")
+    public ResponseEntity<String> devolverLivro(@PathVariable int codigoLivro) {
+        boolean sucesso = acervo.devolverLivro(codigoLivro);
+        return sucesso ? ResponseEntity.ok("Livro devolvido com sucesso!") :
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não foi possível devolver o livro.");
+    }
     
 }

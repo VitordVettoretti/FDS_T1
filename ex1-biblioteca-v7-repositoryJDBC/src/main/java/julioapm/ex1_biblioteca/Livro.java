@@ -11,8 +11,8 @@ public class Livro {
         this.titulo = titulo;
         this.autor = autor;
         this.ano = ano;
-        this.emprestado = emprestado;
-        this.usuarioEmprestado = usuarioEmprestado;
+        this.emprestado = false;
+        this.usuarioEmprestado = null;
     }
 
     // Getters e setters
@@ -62,5 +62,11 @@ public class Livro {
 
     public void setUsuarioEmprestado(Usuario usuarioEmprestado) {
         this.usuarioEmprestado = usuarioEmprestado;
+    }
+
+    @Override
+    public String toString() {
+        return "Livro [id=" + id + ", titulo=" + titulo + ", autor=" + autor + ", ano=" + ano + 
+               ", emprestado=" + emprestado + ", usuarioEmprestado=" + (usuarioEmprestado != null ? usuarioEmprestado.getNome() : "Nenhum") + "]";
     }
 }
