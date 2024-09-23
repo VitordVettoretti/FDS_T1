@@ -51,4 +51,22 @@ public class AcervoImplJdbc implements AcervoRepository {
         this.jdbcTemplate.update("DELETE FROM livros WHERE codigo = ?", codigo);
         return true;
     }
+
+    @Override
+    public boolean emprestarLivro(int codigoLivro, Usuario usuario) {
+        this.jdbcTemplate.update(
+            "UPDATE livros SET emprestado = ?, usuario_codigo = ? WHERE codigo = ?",
+            true, usuario.getCodigo(), codigoLivro
+        );
+        return true;
+    }
+
+    @Override
+    public boolean devolverLivro(int codigoLivro) {
+        this.jdbcTemplate.update(
+            "UPDATE livros SET emprestado = ?, usuario_codigo = NULL WHERE codigo = ?",
+            false, codigoLivro
+        );
+        return true;
+    }
 }
