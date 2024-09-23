@@ -1,0 +1,16 @@
+CREATE TABLE usuarios (
+    codigo INT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    ano_nascimento INT NOT NULL
+);
+
+
+CREATE TABLE livros (
+    codigo INT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    autor VARCHAR(255) NOT NULL,
+    ano INT NOT NULL,
+    emprestado BOOLEAN DEFAULT FALSE,
+    usuario_emprestado INT,
+    CONSTRAINT fk_usuario_emprestado FOREIGN KEY (usuario_emprestado) REFERENCES usuarios(codigo) ON DELETE SET NULL
+);
