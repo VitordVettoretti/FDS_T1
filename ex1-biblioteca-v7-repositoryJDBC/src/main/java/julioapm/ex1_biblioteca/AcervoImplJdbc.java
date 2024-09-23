@@ -13,7 +13,7 @@ public class AcervoImplJdbc implements AcervoRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-@Override
+    @Override
     public List<Livro> getAll() {
         return this.jdbcTemplate.query("SELECT codigo, titulo, autor, ano, emprestado, usuario_emprestado FROM livros",
             (resultSet, rowNum) -> {
@@ -36,6 +36,7 @@ public class AcervoImplJdbc implements AcervoRepository {
             });
     }
 
+    @Override
     public List<Livro> getLivrosDoAutor(String autor) {
         String sql = "SELECT codigo, titulo, autor, ano FROM livros WHERE autor = ?";
         return this.jdbcTemplate.query(sql, new Object[]{autor},
@@ -46,19 +47,19 @@ public class AcervoImplJdbc implements AcervoRepository {
             resultSet.getInt("ano")
         ));
     }
-
+    @Override
     public List<String> getAutores() {
         String sql = "SELECT DISTINCT autor FROM livros";
         return this.jdbcTemplate.query(sql, 
         (resultSet, rowNum) -> resultSet.getString("autor"));
     }
-
+    @Override
     public List<String> getTitulos() {
         String sql = "SELECT DISTINCT titulo FROM livros";
         return this.jdbcTemplate.query(sql, 
         (resultSet, rowNum) -> resultSet.getString("titulo"));
     }
-
+    @Override
     public List<Livro> getLivrosTitulo(String titulo) {
         String sql = "SELECT codigo, titulo, autor, ano FROM livros WHERE titulo = ?";
         return this.jdbcTemplate.query(sql, new Object[]{titulo},
@@ -69,7 +70,7 @@ public class AcervoImplJdbc implements AcervoRepository {
             resultSet.getInt("ano")
         ));
     }
-
+    @Override
     public boolean cadastraLivroNovo(Livro livro) {
         this.jdbcTemplate.update(
             "INSERT INTO livros(codigo,titulo,autor,ano) VALUES (?,?,?,?)",
